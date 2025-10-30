@@ -9,4 +9,4 @@ A Qt/C++ application that visualizes the recursive Fibonacci call tree.
 - Export screenshots / gifs (if available)
 
 ## Screenshot
-![screenshot](./screenshots/preview.png)
+![screenshot](./screenshot.png)
