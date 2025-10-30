@@ -4,10 +4,10 @@
 #include <cmath>
 #include <algorithm>
 
-// Define static constants
-const int TreeVisualizer::NODE_RADIUS;
-const int TreeVisualizer::VERTICAL_SPACING;
-const int TreeVisualizer::MIN_HORIZONTAL_SPACING;
+// Define static constants (needed when their address is taken)
+constexpr int TreeVisualizer::NODE_RADIUS;
+constexpr int TreeVisualizer::VERTICAL_SPACING;
+constexpr int TreeVisualizer::MIN_HORIZONTAL_SPACING;
 
 TreeVisualizer::TreeVisualizer(QWidget *parent)
     : QWidget(parent), tree(nullptr), animationTimer(nullptr), 
@@ -100,8 +100,10 @@ void TreeVisualizer::resizeEvent(QResizeEvent *event) {
 void TreeVisualizer::drawTree(QPainter& painter) {
     if (!tree || !tree->getRoot() || allNodes.empty()) return;
     
+    size_t visibleNodes = std::min(static_cast<size_t>(currentStep), allNodes.size());
+    
     // Draw edges first
-    for (size_t i = 0; i < std::min(static_cast<size_t>(currentStep), allNodes.size()); ++i) {
+    for (size_t i = 0; i < visibleNodes; ++i) {
         TreeNode* node = allNodes[i];
         
         if (nodePositions.find(node) == nodePositions.end()) continue;
@@ -133,7 +135,7 @@ void TreeVisualizer::drawTree(QPainter& painter) {
     }
     
     // Draw nodes
-    for (size_t i = 0; i < std::min(static_cast<size_t>(currentStep), allNodes.size()); ++i) {
+    for (size_t i = 0; i < visibleNodes; ++i) {
         TreeNode* node = allNodes[i];
         
         if (nodePositions.find(node) == nodePositions.end()) continue;

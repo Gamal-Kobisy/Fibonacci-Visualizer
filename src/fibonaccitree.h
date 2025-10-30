@@ -5,6 +5,9 @@
 #include <unordered_map>
 #include <vector>
 
+// TreeNode represents a single node in the Fibonacci recursion tree.
+// Ownership: Each node owns its children (left and right) and is responsible
+// for their deletion. The parent pointer is non-owning and used for traversal only.
 struct TreeNode {
     int value;
     int result;
@@ -13,7 +16,7 @@ struct TreeNode {
     int depth;
     TreeNode* left;
     TreeNode* right;
-    TreeNode* parent;
+    TreeNode* parent;  // Non-owning pointer to parent node
     
     TreeNode(int val, int d, TreeNode* p = nullptr)
         : value(val), result(-1), isComputed(false), isMemoized(false), 

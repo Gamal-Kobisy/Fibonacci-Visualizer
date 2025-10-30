@@ -197,10 +197,10 @@ void MainWindow::updateStatistics() {
     } else {
         // Calculate what it would be with memoization for comparison
         int n = root->value;
-        int wouldBeCalls = (n + 1) * 2; // Approximation for memoized calls
+        int wouldBeCalls = n + 1; // With memoization, each value computed once
         if (totalCalls > wouldBeCalls) {
-            statsText += QString("With memoization, this would need only ~%1 calls\n").arg(wouldBeCalls);
-            statsText += QString("Potential efficiency gain: ~%1%")
+            statsText += QString("With memoization, this would need only %1 calls\n").arg(wouldBeCalls);
+            statsText += QString("Potential efficiency gain: %1%")
                         .arg((double)(totalCalls - wouldBeCalls) / totalCalls * 100.0, 0, 'f', 1);
         }
     }
