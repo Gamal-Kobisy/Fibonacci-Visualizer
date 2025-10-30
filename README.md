@@ -10,15 +10,3 @@ A Qt/C++ application that visualizes the recursive Fibonacci call tree.
 
 ## Screenshot
 ![screenshot](./screenshots/preview.png)
-
-## Requirements
-- Qt 6.x (or Qt 5.x) — specify exact version
-- C++17
-- CMake 3.16+ (or qmake if used)
-
-## Build (CMake)
-```bash
-mkdir build
-cd build
-cmake ..            # -DCMAKE_PREFIX_PATH=/path/to/Qt if needed
-cmake --build .
