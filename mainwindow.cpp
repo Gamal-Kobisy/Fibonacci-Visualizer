@@ -18,20 +18,19 @@ NodeItem::NodeItem(FibNode* node, QGraphicsItem* parent)
     : QGraphicsEllipseItem(parent), nodePtr(node) {
     // rounded rect centered at (0,0)
     setRect(-50, -28, 100, 56);
-    // modern off-white pen for subtle border
-    setPen(QPen(QColor(240, 244, 249), 1));
+    setPen(QPen(Qt::white, 1));
     setFlag(ItemIsSelectable);
     setFlag(ItemSendsScenePositionChanges);
 
     // label (main: F(n))
     label = new QGraphicsTextItem(this);
-    label->setDefaultTextColor(QColor(250,250,252));
+    label->setDefaultTextColor(Qt::white);
     label->setFont(QFont("Segoe UI", 10, QFont::Bold));
     label->setPos(-15, -25);
 
     // subLabel (value)
     subLabel = new QGraphicsTextItem(this);
-    subLabel->setDefaultTextColor(QColor(200, 220, 235));
+    subLabel->setDefaultTextColor(QColor(240,240,240));
     subLabel->setFont(QFont("Segoe UI", 8));
     subLabel->setPos(-46, -4);
 
@@ -39,28 +38,25 @@ NodeItem::NodeItem(FibNode* node, QGraphicsItem* parent)
 }
 
 void NodeItem::applyStyle() {
-    // modern purple -> teal gradient for nodes
     QLinearGradient grad(rect().topLeft(), rect().bottomRight());
-    grad.setColorAt(0.0, QColor(51, 65, 151));   // deep indigo (#334197)
-    grad.setColorAt(1.0, QColor(20, 184, 166));  // teal-accent (#14B8A6)
+    grad.setColorAt(0.0, QColor(10, 25, 74));   // dark navy blue (#0A194A)
+    grad.setColorAt(1.0, QColor(30, 60, 114));  // slightly lighter blue (#1E3C72)
     setBrush(QBrush(grad));
 }
 
 void NodeItem::setHighlighted(bool on) {
     if (on) {
-        // warm accent gradient for selection (coral -> amber)
         QLinearGradient grad(rect().topLeft(), rect().bottomRight());
-        grad.setColorAt(0.0, QColor(255, 94, 98));
-        grad.setColorAt(1.0, QColor(255, 159, 67));
+        grad.setColorAt(0.0, QColor(255, 203, 5));
+        grad.setColorAt(1.0, QColor(255, 241, 118));
         setBrush(grad);
     } else {
         if (nodePtr->isCached) {
-            // muted slate gradient for cached nodes
             QLinearGradient grad(rect().topLeft(), rect().bottomRight());
-            grad.setColorAt(0.0, QColor(95, 105, 125));
-            grad.setColorAt(1.0, QColor(65, 75, 95));
+            grad.setColorAt(0.0, QColor(120, 120, 120));
+            grad.setColorAt(1.0, QColor(180, 180, 180));
             setBrush(grad);
-            setPen(QPen(QColor(240, 244, 249), 1));
+            setPen(QPen(Qt::white, 1));
         } else {
             applyStyle();
         }
@@ -94,21 +90,14 @@ MainWindow::MainWindow(QWidget *parent)
     // info area read-only + modern styling
     ui->infoText->setReadOnly(true);
     ui->infoText->setFont(QFont("Segoe UI", 16));
-    ui->infoText->setStyleSheet("QTextEdit{ background: #0f1724; color: #E6EEF8; border-radius:8px; padding:8px; }");
+    ui->infoText->setStyleSheet("QTextEdit{ background: #f7f9fb;color:balack; border-radius:8px; padding:8px; }");
     ui->infoText->setPlainText("Press Draw to build the tree. Use Step to reveal one node (root appears first), Skip to reveal the rest quickly.");
 
     // modernize buttons/colors via stylesheet
     QString btnStyle = R"(
-        QPushButton {
-            background: qlineargradient(x1:0,y1:0,x2:0,y2:1, stop:0 #3A7BD5, stop:1 #00D2FF);
-            color: white;
-            border-radius:8px;
-            padding:8px 14px;
-            font-weight:600;
-        }
-        QPushButton:disabled { background: rgb(110, 115, 125); color: #d6d6d6; }
-        QPushButton:hover { opacity: 0.95; }
-        QRadioButton, QCheckBox { padding:4px; color: #E6EEF8; }
+        QPushButton { background: rgb(20, 25, 150); color: white; border-radius:6px; padding:6px 12px; }
+        QPushButton:disabled { background: rgb(180, 180, 180); color: #666; }
+        QRadioButton, QCheckBox { padding:4px; }
     )";
     ui->btnDraw->setStyleSheet(btnStyle);
     ui->btnStep->setStyleSheet(btnStyle);
